@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cleanzip"
-version = "1.0.0"
+version = "1.0.1"
 description = "ZIP a project while respecting .gitignore — no Git required."
 readme = "README.md"
 license = "MIT"
