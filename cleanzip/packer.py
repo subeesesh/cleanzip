@@ -1,4 +1,4 @@
-"""Core packing logic for rzip."""
+"""Core packing logic for cleanzip."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import sys
 import zipfile
 from typing import List, Optional, Union
 
-from rzip.utils import collect_files, load_gitignore_spec
+from cleanzip.utils import collect_files, load_gitignore_spec
 
 
 def pack(

@@ -1,8 +1,8 @@
-# rzip
+# cleanzip
 
 > ZIP a project while respecting `.gitignore` — no Git required.
 
-**rzip** creates a clean ZIP archive of your project, automatically excluding every file and folder matched by your `.gitignore`. It works even when the project is **not** a Git repository and never shells out to `git`.
+**cleanzip** creates a clean ZIP archive of your project, automatically excluding every file and folder matched by your `.gitignore`. It works even when the project is **not** a Git repository and never shells out to `git`.
 
 Perfect for sharing code with AI code reviewers, teammates, or archival — without dragging along `node_modules/`, `__pycache__/`, or `.env` files.
 
@@ -22,13 +22,13 @@ Perfect for sharing code with AI code reviewers, teammates, or archival — with
 ## Installation
 
 ```bash
-pip install rzip
+pip install cleanzip
 ```
 
 Or install from source:
 
 ```bash
-git clone https://github.com/rzip/rzip.git
+git clone https://github.com/subeesesh/rzip.git
 cd rzip
 pip install -e ".[dev]"
 ```
@@ -41,22 +41,22 @@ pip install -e ".[dev]"
 
 ```bash
 # Pack the current directory
-rzip pack .
+cleanzip pack .
 
 # Specify output name
-rzip pack . -o project.zip
+cleanzip pack . -o project.zip
 
 # See what would be included/excluded
-rzip pack . --verbose
+cleanzip pack . --verbose
 
 # Dry run — no ZIP created
-rzip pack . --dry-run
+cleanzip pack . --dry-run
 ```
 
 ### Python API
 
 ```python
-from rzip import pack
+from cleanzip import pack
 
 # Basic usage
 pack("my_project")
@@ -77,7 +77,7 @@ pack("my_project", dry_run=True)
 ## CLI Reference
 
 ```text
-Usage: rzip pack [OPTIONS] PROJECT_PATH
+Usage: cleanzip pack [OPTIONS] PROJECT_PATH
 
   Pack a project directory into a ZIP archive.
 

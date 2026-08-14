@@ -1,4 +1,4 @@
-"""Command-line interface for rzip."""
+"""Command-line interface for cleanzip."""
 
 from __future__ import annotations
 
@@ -8,13 +8,13 @@ from typing import Optional
 
 import click
 
-from rzip.packer import pack
+from cleanzip.packer import pack
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
-@click.version_option(package_name="rzip")
+@click.version_option(package_name="cleanzip")
 def cli() -> None:
-    """rzip — ZIP a project while respecting .gitignore."""
+    """cleanzip — ZIP a project while respecting .gitignore."""
 
 
 @cli.command()
@@ -47,7 +47,7 @@ def pack_cmd(
 
 
 def main() -> None:
-    """Entry point for the ``rzip`` console script."""
+    """Entry point for the ``cleanzip`` console script."""
     cli()
 
 

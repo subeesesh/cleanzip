@@ -1,4 +1,4 @@
-"""Utility helpers for rzip."""
+"""Utility helpers for cleanzip."""
 
 from __future__ import annotations
 

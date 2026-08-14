@@ -1,4 +1,4 @@
-"""Tests for rzip.packer and rzip.utils."""
+"""Tests for cleanzip.packer and cleanzip.utils."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ import zipfile
 
 import pytest
 
-from rzip.packer import pack
-from rzip.utils import collect_files, load_gitignore_spec
+from cleanzip.packer import pack
+from cleanzip.utils import collect_files, load_gitignore_spec
 
 
 # ---------------------------------------------------------------------------

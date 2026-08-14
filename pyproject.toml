@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "rzip"
+name = "cleanzip"
 version = "1.0.0"
 description = "ZIP a project while respecting .gitignore — no Git required."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.9"
-authors = [{name = "rzip contributors"}]
+authors = [{name = "cleanzip contributors"}]
 keywords = ["zip", "gitignore", "packaging", "archive", "code-review"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -38,14 +38,14 @@ dev = [
 ]
 
 [project.scripts]
-rzip = "rzip.cli:main"
+cleanzip = "cleanzip.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/rzip/rzip"
-Issues = "https://github.com/rzip/rzip/issues"
+Homepage = "https://github.com/subeesesh/rzip"
+Issues = "https://github.com/subeesesh/rzip/issues"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["rzip"]
+packages = ["cleanzip"]
