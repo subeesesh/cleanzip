@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rzip"
+version = "1.0.0"
+description = "ZIP a project while respecting .gitignore — no Git required."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [{name = "rzip contributors"}]
+keywords = ["zip", "gitignore", "packaging", "archive", "code-review"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: System :: Archiving :: Compression",
+]
+dependencies = [
+    "pathspec>=0.11",
+    "click>=8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "pytest-cov",
+]
+
+[project.scripts]
+rzip = "rzip.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/rzip/rzip"
+Issues = "https://github.com/rzip/rzip/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["rzip"]
