@@ -14,26 +14,87 @@ _BUILTIN_EXCLUDES: List[str] = [
     ".git/**",
 ]
 
+# Default .gitignore content written when no .gitignore is found.
+_DEFAULT_GITIGNORE = """\
+# Created by cleanzip — common files to exclude from ZIP archives.
+
+# Python
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Version control
+.git/
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Build output
+build/
+dist/
+target/
+coverage/
+
+# Test / lint caches
+.pytest_cache/
+.mypy_cache/
+
+# Framework caches
+.next/
+.nuxt/
+
+# Temporary files
+tmp/
+temp/
+.cache/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+"""
+
+
+def _ensure_gitignore(project_path: pathlib.Path) -> None:
+    """Create a default ``.gitignore`` in *project_path* if one does not exist."""
+    gitignore = project_path / ".gitignore"
+    if not gitignore.exists():
+        gitignore.write_text(_DEFAULT_GITIGNORE, encoding="utf-8")
+        print(f"Created default .gitignore in {project_path}")
+
 
 def load_gitignore_spec(
     project_path: pathlib.Path,
 ) -> pathspec.PathSpec:
     """Read ``.gitignore`` from *project_path* and return a compiled PathSpec.
 
-    If the file does not exist an empty spec (matches nothing) is returned.
-    Built-in excludes (e.g. ``.git/``) are always appended.
+    If no ``.gitignore`` exists, a default one is created automatically
+    containing common patterns for Python, Node, IDEs, OS files, and build
+    artifacts.  Built-in excludes (e.g. ``.git/``) are always appended.
     """
+    _ensure_gitignore(project_path)
+
     patterns: List[str] = list(_BUILTIN_EXCLUDES)
 
     gitignore = project_path / ".gitignore"
-    if gitignore.is_file():
-        text = gitignore.read_text(encoding="utf-8", errors="surrogateescape")
-        for line in text.splitlines():
-            stripped = line.strip()
-            if stripped and not stripped.startswith("#"):
-                patterns.append(stripped)
+    text = gitignore.read_text(encoding="utf-8", errors="surrogateescape")
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped and not stripped.startswith("#"):
+            patterns.append(stripped)
 
     return pathspec.PathSpec.from_lines("gitignore", patterns)
+
 
 
 def collect_files(

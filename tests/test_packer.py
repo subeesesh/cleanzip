@@ -92,8 +92,13 @@ class TestLoadGitignoreSpec:
 
     def test_missing_gitignore(self, project_no_gitignore: pathlib.Path) -> None:
         spec = load_gitignore_spec(project_no_gitignore)
-        # Only built-in excludes active
+        # A default .gitignore should have been auto-created.
+        assert (project_no_gitignore / ".gitignore").exists()
+        # Default patterns + built-in excludes are active.
         assert spec.match_file(".git/")
+        assert spec.match_file("__pycache__/")
+        assert spec.match_file(".env")
+        # Regular source files are still included.
         assert not spec.match_file("file.txt")
 
     def test_always_excludes_git_dir(self, sample_project: pathlib.Path) -> None:
@@ -123,12 +128,15 @@ class TestCollectFiles:
                     "__pycache__/main.cpython-312.pyc"):
             assert bad not in names, f"{bad} should have been excluded"
 
-    def test_no_gitignore_includes_everything(self, project_no_gitignore: pathlib.Path) -> None:
+    def test_no_gitignore_auto_creates_and_includes_sources(self, project_no_gitignore: pathlib.Path) -> None:
         spec = load_gitignore_spec(project_no_gitignore)
         files = collect_files(project_no_gitignore, spec)
         names = {f.as_posix() for f in files}
+        # Source files are still included.
         assert "file.txt" in names
         assert "sub/nested.txt" in names
+        # The auto-created .gitignore itself is included in the archive.
+        assert ".gitignore" in names
 
     def test_unicode_filenames(self, project_with_unicode: pathlib.Path) -> None:
         spec = load_gitignore_spec(project_with_unicode)
@@ -220,12 +228,15 @@ class TestPack:
         assert "pkg/__init__.py" in names
         assert "pkg/core.py" in names
 
-    def test_missing_gitignore_includes_all(
+    def test_missing_gitignore_auto_creates_and_packs(
         self, project_no_gitignore: pathlib.Path, tmp_path: pathlib.Path,
     ) -> None:
         out = tmp_path / "bare.zip"
         pack(project_no_gitignore, out)
         with zipfile.ZipFile(out) as zf:
             names = set(zf.namelist())
+        # Source files are included.
         assert "file.txt" in names
         assert "sub/nested.txt" in names
+        # Auto-created .gitignore is included too.
+        assert ".gitignore" in names
